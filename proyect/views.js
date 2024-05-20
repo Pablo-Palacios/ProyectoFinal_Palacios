@@ -75,7 +75,7 @@ function carro(nombre, precio){
             buttonelimina.onclick = () => {
                 carro.removeChild(produ_final)
                 total_carro=restar(total_carro, resul)
-                lista_carro.pop()
+                
                 total_carrito.innerHTML= `Total carro: $${total_carro}`
             }
 
