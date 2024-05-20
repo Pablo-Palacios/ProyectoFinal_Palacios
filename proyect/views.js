@@ -17,131 +17,88 @@ const producto3 = new Productos(3,"Desodorante", 200)
 
 
 
-
 function restar(a,b){
-    resultado = a - b
+    let resultado = a - b
     return parseInt(resultado)
 }
 
+function sumar(a,b){
+    let resultado = a + b
+    return parseInt(resultado)
+}
 
-
-
-function mostrarProductos(){
-    const lista=[producto1.mostrar(), producto2.mostrar(), producto3.mostrar(),"4.Salir"]
-    let mensaje = "Indique el numero del producto que desea comprar" + "\n"
-    for(const i of lista){
-        mensaje += i + "\n"
-    }
-
-    let intentos = 0
-    const maxIntentos = 2
-    while(intentos < maxIntentos){
-        const compra = parseInt(prompt(mensaje))
-        if(compra === 1){
-            const pago = parseInt(prompt("Seleccionaste: " + producto1.mostrar() +"\n"+
-                                        "Agrega el monto"))
-           
-            if(pago >= producto1.precio){
-                let vuelto = restar(pago, producto1.precio)
-
-                alert("Compraste: " + producto1.nombre + "\n" + "su vuelto es: " + vuelto)
-                alert("Gracias por su compra. Vuelvas prontos")
-                break;
-            }else{
-                intentos++;
-                if(intentos < maxIntentos){
-                    alert("No alcanza, le faltan: $" + restar(producto1.precio, pago) + "\n" +
-                        "Le quedan " + (maxIntentos - intentos) + " intento" + "\n" +
-                        "Intente de nuevo")
-                }
-                else{
-                    alert("se te acabaron los intentos. Chau")
-                    break;
-                }
-                
-            }
-        }
-        else if(compra === 2){
-            const pago = parseInt(prompt("Seleccionaste: " + producto2.mostrar()+"\n"+
-                                        "Agrega el monto"))
-           
-            if(pago >= producto2.precio){
-                let vuelto = restar(pago, producto2.precio)
-
-                alert("Compraste: " + producto2.nombre + "\n" + "su vuelto es: " + vuelto)
-                alert("Gracias por su compra. Vuelvas prontos")
-                break;
-            }else{
-                intentos++;
-                if(intentos < maxIntentos){
-                    alert("No alcanza, le faltan: $" + restar(producto1.precio, pago) + "\n" +
-                        "Le quedan " + (maxIntentos - intentos) + " intento" + "\n" +
-                        "Intente de nuevo")
-                }
-                else{
-                    alert("se te acabaron los intentos. Chau")
-                    break;
-                }
-                
-            }
-        }
-        else if(compra === 3){
-            const pago = parseInt(prompt("Seleccionaste: " + producto3.mostrar() +"\n"+
-                                        "Agrega el monto"))
-           
-            if(pago >= producto3.precio){
-                let vuelto = restar(pago, producto3.precio)
-
-                alert("Compraste: " + producto3.nombre + "\n" + "su vuelto es: " + vuelto)
-                alert("Gracias por su compra. Vuelvas prontos")
-                break;
-            }else{
-                intentos++;
-                if(intentos < maxIntentos){
-                    alert("No alcanza, le faltan: $" + restar(producto1.precio, pago) + "\n" +
-                        "Le quedan " + (maxIntentos - intentos) + " intento" + "\n" +
-                        "Intente de nuevo")
-                }
-                else{
-                    alert("se te acabaron los intentos. Chau")
-                    break;
-                }
-                
-            }
-        }
-        else if(compra===4){
-            alert("Vuelvas prontos")
-            break;      
-        }
-        else{
-            alert("Numero incorrecto") 
-        }
-    }      
+function multi(precio,cantidad){
+    let resultado = precio*cantidad
+    return parseFloat(resultado)
 }
 
 
-function app(){
-    let contador = prompt("BIENVENIDO FARMACIA"+"\n" + "Elegir un numero" +"\n" + "1.Productos" +"\n" + "2.Salir")
+const lista=[producto1, producto2, producto3]
 
-    while(true){
-        if(contador === "1"){
+const productos = document.getElementById("productos")
+let total_carro = 0
+
+
+function carro(nombre, precio){
+    let maxProductos = 5
+
+    while (true){
+        let cantidad = parseInt(prompt("Seleccionaste: " + nombre + "$"+precio+"\n" + "Ingresa la cantidad que deseas llevar")
+                                        + "\n" + "Solo puedes llevar una maxima de 5 intentos")
+        
+        
+        if(isNaN(cantidad) || cantidad < 0){
+            alert("Ingrese un caracter correcto")
+        }
+        else if(cantidad > maxProductos){
+            alert("No se puede agregar mas de 5 unidades")
+        }
+        else if(cantidad === 0){
+            alert("Debes agregar un producto por lo menos")
+        }
+        else{
+            const resul = multi(precio,cantidad)
+            total_carro = sumar(total_carro, resul)
             
-            mostrarProductos()
+            const produ_final = document.createElement("li")
+            const carro = document.getElementById("productos_finales")
+
+            produ_final.innerHTML = `${cantidad} - ${nombre}: $${resul} <button class="boton-eliminar">Eliminar</button>`
+            carro.appendChild(produ_final)
+            
+
+            const total_carrito = document.getElementById("total")
+            total_carrito.innerHTML= `Total carro: $${total_carro}`
+
+            
+            const buttonelimina = produ_final.querySelector(".boton-eliminar")
+            buttonelimina.onclick = () => {
+                carro.removeChild(produ_final)
+                total_carro=restar(total_carro, resul)
+                lista_carro.pop()
+                total_carrito.innerHTML= `Total carro: $${total_carro}`
+            }
+
             break
-        } 
-        else if(contador === "2"){
-            alert("Vuelvas prontos")
-            break; 
-        }
-        else{
-            alert("Numero incorrecto")
-            contador = prompt("BIENVENIDO FARMACIA"+"\n" + "Elegir un numero" +"\n" + "1.Productos" +"\n" + "2.Salir")
-        }
+        }          
     }
 }
 
-// INICIA LA APP
-app();
 
+
+for(const x of lista){
+    const nombres = document.createElement("ul")
+              
+    nombres.innerHTML =`
+                        <li>${x.nombre}: $${x.precio} <button class="boton-compra">Comprar</button></li>
+                        `
+    
+    productos.appendChild(nombres);
+    
+    const boton = nombres.querySelector(".boton-compra")
+    boton.onclick = () => (carro(x.nombre, x.precio))
+
+    
+}
 
 
