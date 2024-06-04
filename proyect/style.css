@@ -63,7 +63,7 @@ h1, h3, h4 {
 }
 
 .boton-eliminar-carro{
-    background-color: #802c1d;
+    background-color: #dd4227;
     color: #fff;
     border: none;
     border-radius: 20px;
@@ -73,7 +73,7 @@ h1, h3, h4 {
     margin: 0 auto; /* Para centrar horizontalmente */
 }
 .boton-eliminar-carro:hover {
-    background-color: #802c1d;
+    background-color: #dd4227;
 }
 
 .table-container {

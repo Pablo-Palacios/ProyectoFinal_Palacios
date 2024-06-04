@@ -46,10 +46,8 @@ const guardarElementosCarros = (clave, valor) => (localStorage.setItem(clave, va
 function carro(nombre, precio){
     let maxProductos = 5
     const carro = document.getElementById("productos_finales")
-    const li_carro = carro.querySelector("tr")
     const total_carrito = document.getElementById("total")
     const produ_final = document.createElement("tr")
-    const storeCarro = JSON.parse(localStorage.getItem("listaCarro"))
 
     while (true){
         // promp que recibe la cantidad de productos
@@ -74,6 +72,7 @@ function carro(nombre, precio){
             
 
             if(element_exist){
+                const li_carro = carro.querySelector("tr")
                 // si existe, se le toma los valores actuales y se le suman las cantidades seleccionadas y su precio
                 // Se rescribe los datos en el mismo
                 // en los calculos, se toman la cantidad ya asignada y se le suma la cantidad nueva del promp, luego esa cantidad total se le multiplica el preciofijo 
@@ -114,6 +113,7 @@ function carro(nombre, precio){
                 }
 
             }else{
+                
                 // si el producto no existe ya en el carro, crea uno nuevo
                 const resul = multi(precio,cantidad)
                 total_carro = sumar(total_carro, resul)
@@ -150,8 +150,7 @@ function carro(nombre, precio){
             // visual de monto final del carro cuando se carga por primera vez
             total_carrito.innerHTML= `Total carro: $${total_carro}`
             
-            
-                guardarElementosCarros("listaCarro", JSON.stringify(lista_carro))
+            guardarElementosCarros("listaCarro", JSON.stringify(lista_carro))
             
             }
             break
@@ -177,24 +176,17 @@ function finalizar_carro(){
 
 function eliminar_carro(){
     const carro = document.getElementById("productos_finales")
-    const tbody = carro.querySelectorAll("tbody")
+    const total_carrito = document.getElementById("total")
 
-        // Verificar si tbody existe y eliminar todos sus hijos
-        if (tbody) {
-            while (tbody.firstChild) {
-                tbody.removeChild(tbody.firstChild);
-            }
-        }
+    carro.remove()
+    localStorage.removeItem("listaCarro");
+
+    total_carro = 0
     
-        // Vaciar la lista_carro y resetear el total_carro
-        lista_carro.length = 0;
-        total_carro = 0;
+    lista_carro = []
     
-        // Actualizar el total del carrito en el DOM
-        actualizarTotalCarrito();
-    
-        // Eliminar todos los elementos del localStorage
-        localStorage.removeItem("listaCarro");
+    total_carrito.innerHTML= `Total carro: $${total_carro}`
+
     }
 
 
