@@ -177,17 +177,26 @@ function finalizar_carro(){
 
 function eliminar_carro(){
     const carro = document.getElementById("productos_finales")
-    const li_carro = carro.querySelectorAll("tbody")
+    const tbody = carro.querySelectorAll("tbody")
 
-    while(li_carro.firstChild){
-        li_carro.removeChild(li_carro.firstChild)
-
+        // Verificar si tbody existe y eliminar todos sus hijos
+        if (tbody) {
+            while (tbody.firstChild) {
+                tbody.removeChild(tbody.firstChild);
+            }
+        }
+    
+        // Vaciar la lista_carro y resetear el total_carro
+        lista_carro.length = 0;
         total_carro = 0;
-        lista_carro.length=0;
-
-        
+    
+        // Actualizar el total del carrito en el DOM
+        actualizarTotalCarrito();
+    
+        // Eliminar todos los elementos del localStorage
+        localStorage.removeItem("listaCarro");
     }
-}
+
 
 
 for(const x of lista){
@@ -212,6 +221,7 @@ const boton_finalizar_carro = Carro.querySelector(".boton-finalizar-carro")
 const boton_eliminar_carro = Carro.querySelector(".boton-eliminar-carro")
 
 boton_finalizar_carro.onclick = finalizar_carro
+boton_eliminar_carro.onclick = eliminar_carro
 
 
 
