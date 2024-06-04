@@ -5,18 +5,7 @@ class Productos{
         this.nombre = nombre
         this.precio = precio
     }
-
-    mostrar(){ 
-        return(this.id+"." + this.nombre+" "+ "$"+this.precio)
-    }
 }
-
-
-// const lista_carro = [
-//     {"nombre":nombre, "precio":precio}
-// ]
-
-
 
 
 const producto1 = new Productos(1,"Shampoo", 100)
@@ -47,6 +36,9 @@ const lista=[producto1, producto2, producto3, producto4]
 const productos = document.getElementById("productos")
 let total_carro = 0
 let lista_carro = []
+const guardarElementosCarros = (clave, valor) => (localStorage.setItem(clave, valor))
+
+
 
 
 
@@ -54,9 +46,10 @@ let lista_carro = []
 function carro(nombre, precio){
     let maxProductos = 5
     const carro = document.getElementById("productos_finales")
-    const li_carro = carro.querySelector("li")
+    const li_carro = carro.querySelector("tr")
     const total_carrito = document.getElementById("total")
-    const produ_final = document.createElement("li")
+    const produ_final = document.createElement("tr")
+    const storeCarro = JSON.parse(localStorage.getItem("listaCarro"))
 
     while (true){
         // promp que recibe la cantidad de productos
@@ -94,7 +87,11 @@ function carro(nombre, precio){
                 total_carro = sumar(restar(currentPrecio, total_carro), precio_update) 
                 
                 //se actualizan los cambios de los valores en el carro del html
-                li_carro.innerHTML = `${verificar.cantidad} - ${nombre}: $${verificar.precio} <button class="boton-eliminar">Eliminar</button>`
+                li_carro.innerHTML = `
+                        <td>${verificar.cantidad}</td> 
+                        <td>${nombre}</td>
+                        <td>${verificar.precio}</td> 
+                        <td><button class="boton-eliminar">Eliminar</button></td>`
 
                 //monto total del carro actualizandose de los montos cambiados y sumando el valor que ya poseeia con el nuevo
                 total_carrito.innerHTML= `Total carro: $${total_carro}`
@@ -104,10 +101,12 @@ function carro(nombre, precio){
                 buttonelimina.onclick = () => {
                 carro.removeChild(li_carro)
                 total_carro=restar(total_carro, verificar.precio)
+                
                 // aca borra el producto de la lista del carro
                 const index = lista_carro.findIndex(item => item.nombre === nombre)
                 if(index > -1){
                     lista_carro.splice(index, 1)
+                    
                     
                 }
                 // monto final del carrito restado lo que se elimino
@@ -121,11 +120,17 @@ function carro(nombre, precio){
 
                 // se agrega el prodcuto y sus datos a la lista del carrito
                 lista_carro.push({"cantidad":cantidad, "nombre":nombre, "precio":resul})
-                console.log(lista_carro)
+                //console.log(lista_carro)
 
                 // aca se agrega al carro del html
-                produ_final.innerHTML = `${cantidad} - ${nombre}: $${resul} <button class="boton-eliminar">Eliminar</button>`
+                produ_final.innerHTML = `
+                    <td>${cantidad}</td> 
+                    <td>${nombre}</td>
+                    <td>${resul}</td> 
+                    <td><button class="boton-eliminar">Eliminar</button></td>`
                 carro.appendChild(produ_final)
+
+                localStorage.getItem(produ_final)
 
                 // boton eliminar 
                 const buttonelimina = produ_final.querySelector(".boton-eliminar")
@@ -136,6 +141,7 @@ function carro(nombre, precio){
                 const index = lista_carro.findIndex(item => item.nombre === nombre)
                 if(index > -1){
                     lista_carro.splice(index, 1)
+                    eliminarElemetoLocalstore(nombre)
                 }
                 // monto final del carrito restado lo que se elimino
                 total_carrito.innerHTML= `Total carro: $${total_carro}`
@@ -143,29 +149,71 @@ function carro(nombre, precio){
 
             // visual de monto final del carro cuando se carga por primera vez
             total_carrito.innerHTML= `Total carro: $${total_carro}`
-
+            
+            
+                guardarElementosCarros("listaCarro", JSON.stringify(lista_carro))
+            
             }
-
             break
         }          
     }
 }
 
+function finalizar_carro(){
+    const carro = document.getElementById("productos_finales")
+    const li_carro = carro.querySelectorAll("tr")
+
+    if(li_carro.length > 0){
+        let mensaje = "Tu compra finaliza con estos productos"+"\n" 
+        for(let i=0; i < li_carro.length; i++){
+            mensaje += li_carro[i].textContent
+        }
+        alert(mensaje)
+    }
+    else{
+        alert("Tu carrito esta vacio")
+    }
+}
+
+function eliminar_carro(){
+    const carro = document.getElementById("productos_finales")
+    const li_carro = carro.querySelectorAll("tbody")
+
+    while(li_carro.firstChild){
+        li_carro.removeChild(li_carro.firstChild)
+
+        total_carro = 0;
+        lista_carro.length=0;
+
+        
+    }
+}
 
 
 for(const x of lista){
-    const nombres = document.createElement("ul")
+    //const nombres = document.createElement("ul")
+    //const prod = document.getElementsByClassName("product-list")
+    const li = document.createElement("ul")
+    li.className = "product-item"
               
-    nombres.innerHTML =`
-                        <li>${x.nombre}: $${x.precio} <button class="boton-compra">Comprar</button></li>
-                        `
+    li.innerHTML =`
+                    ${x.nombre}: $${x.precio} <button class="boton-comprar">Añadir al carrito</button>`
     
-    productos.appendChild(nombres);
+    productos.appendChild(li);
     
-    const boton = nombres.querySelector(".boton-compra")
+    const boton = li.querySelector(".boton-comprar")
     boton.onclick = () => (carro(x.nombre, x.precio))
 
     
 }
+
+const Carro = document.getElementById("carrito")
+const boton_finalizar_carro = Carro.querySelector(".boton-finalizar-carro")
+const boton_eliminar_carro = Carro.querySelector(".boton-eliminar-carro")
+
+boton_finalizar_carro.onclick = finalizar_carro
+
+
+
 
 

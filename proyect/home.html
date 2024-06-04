@@ -3,26 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Farmacia San Camilo</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 </head>
-
-
 <body>
-    <div>
+
+<div class="container">
+    <div class="my-4">
         <h1>FARMACIA SAN CAMILO</h1>
         <h3>Selecciona cualquier producto que desees comprar</h3>
     </div>
     
-    <div id="productos">
+    <div id="productos" class="my-4">
         <h4>Productos</h4>
+        <ul class="product-list">
+            
+        </ul>
     </div>
 
-    <div id="carrito">
-        <h3> Su Carrito</h3>
-        <ul id = "productos_finales"></ul>
-        <h4 id="total">Total carro:  $0</h4>
+    <div id="carrito" class="container">
+        <h3>Su Carrito</h3>
+        <div class="table-container">
+            <table class="cart-table">
+                <thead>
+                    <tr>
+                        <th>Cantidad</th>
+                        <th>Producto</th>
+                        <th>Precio</th>
+                        <th>Acción</th>
+                    </tr>
+                </thead>
+                <tbody id="productos_finales">
+                    
+                </tbody>
+            </table>
+        </div>
+        <h4 id="total">Total carro: $0</h4>
+        <button class="boton-finalizar-carro">Finalizar compra</button>
+        <button class="boton-eliminar-carro">Eliminar carro</button>
     </div>
-    
-    <script src="views.js"></script>
+</div>
+
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+<script src="views.js"></script>
 </body>
-</html> 
+</html>
