@@ -14,13 +14,26 @@
         <h1>FARMACIA SAN CAMILO</h1>
         <h3>Selecciona cualquier producto que desees comprar</h3>
     </div>
-    
-    <div id="productos" class="my-4">
-        <h4>Productos</h4>
-        <ul class="product-list">
-            
-        </ul>
+
+    <div class="form-container">
+        <h2 class="mb-4">Selecciona tu moneda</h2>
+        <select class="form-control form-control-sm" id="selector_moneda">
+            <option id="ARG" value="ARG">🇦🇷 ARG</option>
+            <option id="USD" value="USD">🇺🇸 USD</option>
+            <option id="EUR" value="EUR">🇪🇺 EUR</option>
+            <option id="REAL" value="REAL">🇧🇷 REAL</option>
+        </select>
     </div>
+
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">Lista de Productos</h1>
+        <div id="productos" class="my-4">
+            <ul class="product-list">
+                
+            </ul>
+        </div>
+    </div>
+   
 
     <div id="carrito" class="container">
         <h3>Su Carrito</h3>
@@ -36,6 +49,7 @@
                 </thead>
                 <tbody id="productos_finales">
                     
+                    
                 </tbody>
             </table>
         </div>
@@ -47,5 +61,7 @@
 
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 <script src="views.js"></script>
+<script src="dolar.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 </html>
