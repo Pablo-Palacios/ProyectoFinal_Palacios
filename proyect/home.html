@@ -9,11 +9,25 @@
 </head>
 <body>
 
-<div class="container">
-    <div class="my-4">
-        <h1>FARMACIA SAN CAMILO</h1>
-        <h3>Selecciona cualquier producto que desees comprar</h3>
+    <div class="container">
+        <div class="my-4">
+            <h1>FARMACIA SAN CAMILO</h1>
+            <h3>Selecciona cualquier producto que desees comprar</h3>
+        </div>
     </div>
+
+    <div class="modoOscuro_claro">
+        <div class="container mt-5 text-center">
+            <button id="darkModeButton" class="toggle-button dark-mode">
+                <i class="fas fa-moon"></i> Modo Oscuro
+            </button>
+            <button id="lightModeButton" class="toggle-button light-mode">
+                <i class="fas fa-sun"></i> Modo Claro
+            </button>
+        </div>
+    </div>
+    
+    
 
     <div class="form-container">
         <h2 class="mb-4">Selecciona tu moneda</h2>
@@ -44,7 +58,6 @@
                         <th>Cantidad</th>
                         <th>Producto</th>
                         <th>Precio</th>
-                        <th>Acción</th>
                     </tr>
                 </thead>
                 <tbody id="productos_finales">
@@ -53,7 +66,7 @@
                 </tbody>
             </table>
         </div>
-        <h4 id="total">Total carro: $0</h4>
+        <h2 id="total">Total carro: $0</h2>
         <button class="boton-finalizar-carro">Finalizar compra</button>
         <button class="boton-eliminar-carro">Eliminar carro</button>
     </div>
@@ -61,7 +74,7 @@
 
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 <script src="views.js"></script>
-<script src="dolar.js"></script>
+<script src="json.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 </html>

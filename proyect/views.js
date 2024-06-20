@@ -25,6 +25,141 @@ const Carro = document.getElementById("carrito")
 const boton_finalizar_carro = Carro.querySelector(".boton-finalizar-carro")
 const boton_eliminar_carro = Carro.querySelector(".boton-eliminar-carro")
 
+// Función para activar el modo oscuro
+function activarModoOscuro() {
+    const body = document.body;
+    const div_moneda = document.querySelector(".form-container");
+    const estilos = window.getComputedStyle(body);
+    const div_prod = document.querySelectorAll(".product-item");
+    const pro_name = document.querySelectorAll(".product-name");
+    const pro_precio = document.querySelectorAll(".product-price");
+    //const buton_comprar = document.querySelectorAll(".boton-comprar");
+
+    
+    const pro_precio_moneda = document.querySelectorAll(".product-price1");
+    //const buton_comprar_moneda = document.querySelectorAll(".boton-comprar1");
+    const cart_table = document.querySelector(".cart-table");
+    const cart_table_th = document.querySelectorAll(".cart-table th");
+    const cart_table_td = document.querySelectorAll(".data-producto");
+
+    const fondo = estilos.getPropertyValue("background-color");
+    if (fondo === "rgb(255, 255, 255)") {
+        body.style.background = "rgb(0, 0, 1)";
+        body.style.color = "rgb(255, 255, 255)";
+        div_moneda.style.background = "rgb(14, 13, 13)";
+        
+        div_prod.forEach(item => {
+            item.style.backgroundColor = "rgb(14, 13, 13)";
+            item.style.color = "rgb(255, 255, 255)";
+        });
+        
+        pro_name.forEach(x => {
+            x.style.color = "#218838";
+        });
+        
+        pro_precio.forEach(x => {
+            x.style.color = "rgb(255, 255, 255)";
+        });
+        
+        buton_comprar.forEach(item => {
+            item.style.background = "#218838";
+            item.style.color = "rgb(255, 255, 255)";
+        });
+
+        
+        pro_precio_moneda.forEach(x => {
+            x.style.color = "rgb(255, 255, 255)";
+        });
+               
+            cart_table.style.backgroundColor = "rgb(61, 60, 60)";
+            cart_table_th.forEach(th => {
+                th.style.backgroundColor = "#4CAF50";
+                th.style.color = "white";
+            });
+
+            cart_table_td.forEach(td => {
+                td.style.backgroundColor = "rgb(14, 13, 13)";
+                td.style.color = "rgb(255, 255, 255)";
+            });
+        }
+}
+
+
+function activarModoClaro(){
+    const body = document.body;
+    const div_moneda = document.querySelector(".form-container");
+    const estilos = window.getComputedStyle(body);
+    const div_prod = document.querySelectorAll(".product-item");
+    const pro_name = document.querySelectorAll(".product-name");
+    const pro_precio = document.querySelectorAll(".product-price");
+    //const buton_comprar = document.querySelectorAll(".boton-comprar");
+
+    
+    const pro_precio_moneda = document.querySelectorAll(".product-price1");
+    //const buton_comprar_moneda = document.querySelectorAll(".boton-comprar1");
+    const cart_table = document.querySelector(".cart-table");
+    const cart_table_th = document.querySelectorAll(".cart-table th");
+    const cart_table_td = document.querySelectorAll(".data-producto");
+
+    const fondo = estilos.getPropertyValue("background-color");
+    if (fondo === "rgb(0, 0, 1)")
+        body.style.background = "rgb(255, 255, 255)";
+        body.style.color = "rgb(0, 0, 0)";
+        div_moneda.style.background = "rgb(255, 255, 255)";
+        
+        div_prod.forEach(item => {
+            item.style.backgroundColor = "rgb(255, 255, 255)";
+            item.style.color = "rgb(0, 0, 0)";
+        });
+        
+        
+        
+        pro_precio.forEach(x => {
+            x.style.color = "rgb(0, 0, 0)";
+        });
+        
+        buton_comprar.forEach(item => {
+            item.style.background = "#007bff";
+            item.style.color = "rgb(255, 255, 255)";
+        });
+
+        pro_name_moneda.forEach(x => {
+            x.style.color = "#007bff";
+        });
+        
+        pro_precio_moneda.forEach(x => {
+            x.style.color = "rgb(0, 0, 0)";
+        });
+        
+        buton_comprar_moneda.forEach(item => {
+            item.style.background = "#007bff";
+            item.style.color = "rgb(255, 255, 255)";
+        });
+
+        if (cart_table) {
+            cart_table.style.backgroundColor = "rgb(255, 255, 255)";
+            cart_table_th.forEach(th => {
+                th.style.backgroundColor = "#4CAF50";
+                th.style.color = "black";
+            });
+
+            cart_table_td.forEach(td => {
+                td.style.backgroundColor = "rgb(255, 255, 255)";
+                td.style.color = "rgb(0, 0, 0)";
+            });
+        }
+}
+
+
+
+// Asignar evento al botón de modo oscuro
+const darkModeButton = document.getElementById("darkModeButton");
+darkModeButton.addEventListener("click", activarModoOscuro);
+
+const claroModeButton = document.getElementById("lightModeButton");
+claroModeButton.addEventListener("click", activarModoClaro);
+
+
 // variables de inicio
 let total_carro = 0
 let lista_carro = []
@@ -33,7 +168,42 @@ let cantidad = 0
 // Local storage
 const guardarElementosCarros = (clave, valor) => (localStorage.setItem(clave, valor))
 
+// Funcion de cambio de moneda
 
+document.addEventListener("DOMContentLoaded", function() {
+    const selector_mone = document.getElementById("selector_moneda")
+
+    selector_mone.addEventListener("change", function() {
+        const moneda = selector_mone.value
+        switch (moneda){
+            case "ARG":
+                convertir(1)
+                
+                break
+            case "USD":
+                const usd = parseFloat(jsonMonedas.list[0].dolar_blue)            
+                convertir(usd)
+                             
+                break
+            case "EUR":
+                const eur = parseFloat(jsonMonedas.list[0].euro)
+                convertir(eur)
+                
+                break
+            case "REAL":
+                const real = parseFloat(jsonMonedas.list[0].real)
+                convertir(real)
+                
+                break
+            default:
+                alert("moneda no encontrada")
+        }
+        remover_carro()
+        lista_productos_html()
+        
+        
+    })
+})
 
 // funciones
 
@@ -69,7 +239,7 @@ function lista_productos_html(){
                   
         li.innerHTML =`<div class="product-details">
                         <span class="product-name">${x.nombre}</span>
-                        <span class="product-price">$${x.precio.toFixed(2)}</span>
+                        <span class="product-price1">$${x.precio.toFixed(2)}</span>
                     </div>
                     <button class="boton-comprar">Añadir al carrito</button>`
         
@@ -77,7 +247,10 @@ function lista_productos_html(){
         const boton = li.querySelector(".boton-comprar")
         boton.onclick = () => (carro(x.nombre, x.precio))
 
-})}
+        
+})
+
+}
 
 function remover_carro(){
     const total_carrito = document.getElementById("total");
@@ -90,46 +263,6 @@ function remover_carro(){
             total_carrito.innerHTML = `Total carro: $${total_carro}`;
 }
                 
-
-// Funcion de cambio de moneda
-
-document.addEventListener("DOMContentLoaded", function() {
-    const selector_mone = document.getElementById("selector_moneda")
-
-    selector_mone.addEventListener("change", function() {
-        const moneda = selector_mone.value
-        switch (moneda){
-            case "ARG":
-                convertir(1)
-                remover_carro()
-                lista_productos_html()
-                break
-            case "USD":
-                const usd = parseFloat(jsonMonedas.list[0].dolar_blue)            
-                convertir(usd)
-                remover_carro()
-                lista_productos_html()                
-                break
-            case "EUR":
-                const eur = parseFloat(jsonMonedas.list[0].euro)
-                convertir(eur)
-                remover_carro()
-                lista_productos_html()
-                break
-            case "REAL":
-                const real = parseFloat(jsonMonedas.list[0].real)
-                convertir(real)
-                remover_carro()
-                lista_productos_html()
-                break
-            default:
-                alert("moneda no encontrada")
-        }
-        
-    })
-})
-
-
 
 function carro(nombre, precio){
     const carro = document.getElementById("productos_finales")
@@ -164,7 +297,7 @@ function carro(nombre, precio){
                             <td>${verificar.cantidad}</td> 
                             <td>${nombre}</td>
                             <td>${verificar.precio}</td> 
-                            <td><button class="boton-eliminar">Eliminar</button></td>`
+                           `
 
                     }
                 }
@@ -186,7 +319,7 @@ function carro(nombre, precio){
                         <td>${cantidad}</td> 
                         <td>${nombre}</td>
                         <td>${resul.toFixed(2)}</td> 
-                        <td><button class="boton-eliminar">Eliminar</button></td>`
+                        `
                     carro.appendChild(produ_final)
 
                     localStorage.getItem(produ_final)
@@ -294,8 +427,6 @@ for(const x of lista){
 // accion de botones
 boton_finalizar_carro.onclick = finalizar_carro
 boton_eliminar_carro.onclick = eliminar_carro
-
-
 
 
 
